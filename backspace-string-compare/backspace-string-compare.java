@@ -1,42 +1,25 @@
 class Solution {
     public boolean backspaceCompare(String s, String t) {
-        int c1 = 0, c2 = 0; // backspace counts
-        int j = t.length() - 1;
-        for (int i = s.length() - 1; i >= 0; i--) {
-            if (s.charAt(i) == '#') {
-                c1++;
-            } else if (c1 > 0) {
-                c1--;
-            } else {
-                boolean charFound = false;
-                while (j >= 0) {
-                    if (t.charAt(j) == '#') {
-                        c2++;
-                    } else if (c2 > 0) {
-                        c2--;
-                    } else {
-                        if (s.charAt(i) != t.charAt(j)) {
-                            return false;
-                        }
-                        charFound = true;
-                        j--;
-                        break;
-                    }
-                    j--;
-                }
-                if (j < 0 && !charFound) {
-                    return false;
-                }
+        int backS = 0, backT = 0; // backspace counts
+        int i = s.length() - 1, j = t.length() - 1;
+        while (i >= 0 || j >= 0) {
+            while (i >= 0) {
+                if (s.charAt(i) == '#') { backS++; i--; }
+                else if (backS > 0) { backS--; i--; }
+                else break;
             }
-        }
-        while (j >= 0) {
-            if (t.charAt(j) == '#') {
-                c2++;
-            } else if (c2 > 0) {
-                c2--;
-            } else {
+            while (j >= 0) {
+                if (t.charAt(j) == '#') { backT++; j--; }
+                else if (backT > 0) { backT--; j--; }
+                else break;
+            }
+            if (i >= 0 && j >= 0 && s.charAt(i) != t.charAt(j)) {
                 return false;
             }
+            if ((i >= 0) != (j >= 0)) {
+                return false;
+            }
+            i--;
             j--;
         }
         return true;
