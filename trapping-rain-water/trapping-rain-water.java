@@ -6,6 +6,9 @@ class Solution {
         for (int i = 0; i < n; i++) {
             while (!stack.isEmpty() && height[i] > height[stack.peek()]) {
                 prev = stack.pop();
+                while (!stack.isEmpty() && height[prev] == height[stack.peek()]) {
+                    stack.pop();
+                }
                 if (stack.isEmpty()) {
                     break;
                 }
